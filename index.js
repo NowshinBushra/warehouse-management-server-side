@@ -27,6 +27,14 @@ async function run() {
             res.send(cars);
         });
 
+        app.get('/car', async(req, res) => {
+            const email = req.query.email;
+            const query = {email: email};
+            const cursor = carCollection.find(query);
+            const car = await cursor.toArray();
+            res.send(items);
+        });
+
         app.get('/car/:id', async(req, res) =>{
             const id = req.params.id;
             const query={_id: ObjectId(id)};
@@ -47,6 +55,21 @@ async function run() {
             const query={_id: ObjectId(id)};
             const result = await carCollection.deleteOne(query);
             res.send(result);
+        });
+
+        //PUT
+        app.put('/car/:id', async(req, res) => {
+            const id = req.params.id;
+            const data = req.body;
+            const filter = {_id: ObjectId(id)};
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    ...data
+                },
+              };
+              const result = await carCollection.updateOne(filter, updateDoc, options);
+              res.send(result);
         })
 
     }
