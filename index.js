@@ -42,6 +42,11 @@ async function run() {
             res.send(car);
         });
 
+
+        app.get('/heroku', (req, res) => {
+            res.send('Testing heroku with mongo');
+        })
+
         //POST
         app.post('/car', async(req, res) =>{
             const newCar = req.body;
