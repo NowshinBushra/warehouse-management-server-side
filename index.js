@@ -32,7 +32,7 @@ async function run() {
             const query = {email: email};
             const cursor = carCollection.find(query);
             const car = await cursor.toArray();
-            res.send(items);
+            res.send(car);
         });
 
         app.get('/car/:id', async(req, res) =>{
